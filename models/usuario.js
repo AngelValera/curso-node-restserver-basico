@@ -35,7 +35,8 @@ const UsuarioSchema = Schema({
 //fuera de la funcion
 UsuarioSchema.methods.toJSON = function(){
 	// Queremos que en nuestro objeto usuario no aparezca ni la version ni el password
-	const { __v, password, ...usuario } = this.toObject();
+	const { __v, password, _id, ...usuario } = this.toObject();	
+	usuario.uid=_id;	
 	return usuario;
 };
 

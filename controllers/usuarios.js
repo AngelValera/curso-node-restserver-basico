@@ -12,10 +12,10 @@ const usuariosGet = async (req, res = response) => {
 		Usuario.countDocuments(query),
 		Usuario.find(query).skip(Number(desde)).limit(Number(limite)),
 	]);
-	
+
 	res.json({
 		total,
-		usuarios
+		usuarios,
 	});
 };
 
@@ -64,9 +64,8 @@ const usuariosDelete = async (req, res) => {
 	// Eliminar lógicamente
 	// Manera recomendada para mantener integridad referencial
 	const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
-
 	res.json(usuario);
-};;
+};
 
 module.exports = {
 	usuariosGet,
