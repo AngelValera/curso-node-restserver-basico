@@ -40,15 +40,6 @@ const existeCategoriaPorId = async (id = "") => {
 	}
 };
 
-const existeCategoriaPorNombre = async (nombre = "") => {
-	// Verificar si el id es correcto
-	nombre = nombre.toUpperCase();
-	const existeCategoria = await Categoria.findOne({ nombre });
-	if (!existeCategoria) {
-		throw new Error(`La categoria ${nombre} no existe`);
-	}
-};
-
 /*
 * Productos
 */
@@ -64,8 +55,7 @@ const existeProductoPorId = async (id = "") => {
 module.exports = {
 	esRolValido,
 	emailExiste,
-	existeCategoriaPorId,
-	existeCategoriaPorNombre,
+	existeCategoriaPorId,	
 	existeProductoPorId,
 	existeUsuarioPorId,
 };

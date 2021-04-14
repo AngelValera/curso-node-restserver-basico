@@ -60,6 +60,13 @@ const actualizarCategoria =  async(req, res=response) => {
     
     data.nombre = data.nombre.toUpperCase();  	   
     data.usuario = req.usuario._id;
+    const categoriaDB = await Categoria.findOne({ nombre: data.nombre });
+
+    if (categoriaDB) {
+        return res.status(400).json({
+            msg: `La categoria ${categoriaDB.nombre}, ya existe.`,
+        });
+    }
 
 	const categoria = await Categoria.findByIdAndUpdate(id, data, { new: true } );
 

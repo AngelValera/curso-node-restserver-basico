@@ -19,23 +19,17 @@ const obtenerProductos = async (req, res = response) => {
 };
 
 const obtenerProducto = async (req, res = response) => {
-	const { id } = req.params;    
+	const { id } = req.params;
 	const producto = await Producto.findById(id)
 		.populate("usuario", "nombre")
-		.populate("categoria", "nombre");   	
-    res.json(		
-		producto
-    ); 	
+		.populate("categoria", "nombre");
+	res.json(producto);
 };
 
 const crearProducto = async (req, res = response) => {
-	const nombre = req.body.nombre.toUpperCase();
-	const nombreCategoria = req.body.categoria.toUpperCase();
-
-	const [{ _id: categoria }, productoDB] = await Promise.all([
-		Categoria.findOne({ nombre: nombreCategoria }),
-		Producto.findOne({ nombre }),
-	]);
+	const {estado, usuario, ...body} = req.body;
+	body.nombre = body.nombre.toUpperCase();
+	const productoDB = await Producto.findOne({ nombre: body.nombre });
 
 	if (productoDB) {
 		return res.status(400).json({
@@ -45,8 +39,8 @@ const crearProducto = async (req, res = response) => {
 
 	// Generar la data a guardar
 	const data = {
-		nombre,
-		categoria,
+		...body,
+		nombre: body.nombre,		
 		usuario: req.usuario._id,
 	};
 
@@ -59,22 +53,21 @@ const crearProducto = async (req, res = response) => {
 
 const actualizarProducto = async (req, res = response) => {
 	const { id } = req.params;
-	const { _id, estado, usuario, disponible, ...data } = req.body;	            
-    const { _id: categoria } = await Categoria.findOne({
-			nombre: data.categoria.toUpperCase(),
-		});
-    data.nombre = data.nombre.toUpperCase();  	   
-    data.usuario = req.usuario._id;    
-    data.categoria = categoria;
-
-	const producto = await Producto.findByIdAndUpdate(id, data, { new: true } );
-	res.json(producto); 	
+	const { _id, estado, usuario, disponible, ...data } = req.body;
+	if (data.nombre) {
+		data.nombre = data.nombre.toUpperCase();	
+	}	
+	data.usuario = req.usuario._id;
+	const producto = await Producto.findByIdAndUpdate(id, data, { new: true });
+	res.json(producto);
 };
 
 const borrarProducto = async (req, res = response) => {
 	const { id } = req.params;
-    const productoBorrado = await Producto.findByIdAndUpdate(id, { estado: false });
-	res.json(productoBorrado); 	
+	const productoBorrado = await Producto.findByIdAndUpdate(id, {
+		estado: false,
+	});
+	res.json(productoBorrado);
 };
 
 module.exports = {

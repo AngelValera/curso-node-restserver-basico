@@ -28,11 +28,15 @@ router.get(
 );
 
 // Crear una categoria - privado - cualquier persona con un token valido
-router.post("/", [
-	validarJWT,
-	check("nombre", "El nombre es obligatorio").not().isEmpty(),
-	validarCampos,
-], crearCategoria);
+router.post(
+	"/",
+	[
+		validarJWT,
+		check("nombre", "El nombre es obligatorio").not().isEmpty(),
+		validarCampos,
+	],
+	crearCategoria,
+);
 
 // Actualizar un registro por id - privado - cualquier persona con un token valido
 router.put(
