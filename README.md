@@ -1,11 +1,13 @@
-# Webserver + RestServer
+# Webserver + RestServer + Sockets
 
 [![Language](https://img.shields.io/badge/node.js%20-%2343853D.svg?&logo=node.js&logoColor=white)](https://nodejs.org/es/)
 [![Heroku](https://www.herokucdn.com/deploy/button.png)](https://restserver-curso-avm.herokuapp.com/)
 
-Otra aplicación del curso de Node.
+Aplicación central del [curso de Node](https://www.udemy.com/course/node-de-cero-a-experto/).
 
-En este caso, se trata de un servidor rest sencillo que sirve a modo de plantilla para futuros proyectos.
+La aplicación consiste en el desarrollo de un backend completo, desarrollado en node.js, con un simple frontend, en el que se ha desarrollado un servidor REST, con varias rutas para realizar CRUDs de distintas entidades. 
+
+En esta apliación también se hace uso de sockets, para el desarrollo de un chat simple, el cual se encuentra integrado completamente con el servidor. 
 
 
 Recuerden que se debe ejecutar ```npm install ``` para reconstruir los módulos de Node.
@@ -20,3 +22,4 @@ Se puede comprobar la documentación del API desde el siguiente [enlace](https:/
 - [Sección 11: Google Sign In - Front y BackEnd](https://github.com/AngelValera/curso-node-restserver-basico/releases/tag/v1.0.3)
 - [Sección 12: Categorías y Productos](https://github.com/AngelValera/curso-node-restserver-basico/releases/tag/v1.0.4)
 - [Sección 13: Carga de Archivos y protección de los mismos](https://github.com/AngelValera/curso-node-restserver-basico/releases/tag/v1.0.5)
+- [Sección 16: Sockets con autenticación](https://github.com/AngelValera/curso-node-restserver-basico/releases/tag/v1.1.0)
