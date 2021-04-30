@@ -47,25 +47,25 @@ const login = async (req, res = response) => {
 
 const googleSignin = async (req, res = response) => {
 	const { id_token } = req.body;
-	
+
 	try {
-		const { nombre, img, correo } = await googleVerify(id_token);		
-		
+		const { nombre, img, correo } = await googleVerify(id_token);
+
 		let usuario = await Usuario.findOne({ correo });
-		
-		 if (!usuario) {			
+
+		if (!usuario) {
 			// Si el usuario no existe hay que crearlo
 			const data = {
 				nombre,
 				correo,
-				password:':P',
-				img,				
-				google:true,				
-			};			
+				password: ":P",
+				img,
+				google: true,
+			};
 			usuario = new Usuario(data);
-			await usuario.save();			
+			await usuario.save();
 		}
-		
+
 		// Si el usuario ya existe hay que ver si está como "eliminado"
 		if (!usuario.estado) {
 			res.status(401).json({
@@ -73,11 +73,11 @@ const googleSignin = async (req, res = response) => {
 			});
 		}
 		// Generar el JWT
-		const token = await generarJWT( usuario.id );
- 
+		const token = await generarJWT(usuario.id);
+
 		res.json({
 			usuario,
-			token
+			token,
 		});
 	} catch (error) {
 		res.status(400).json({
@@ -86,7 +86,18 @@ const googleSignin = async (req, res = response) => {
 	}
 };
 
+const renovarToken = async (req, res = response) => {
+	const { usuario } = req;
+	// Generar el JWT
+	const token = await generarJWT(usuario.id);
+	res.json({
+		usuario,
+		token,
+	});
+};
+
 module.exports = {
 	login,
 	googleSignin,
+	renovarToken,
 };
